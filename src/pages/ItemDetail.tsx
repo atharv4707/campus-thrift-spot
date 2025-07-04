@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,7 +16,8 @@ import {
   MessageSquare,
   Phone,
   Mail,
-  Calendar
+  Calendar,
+  Clock
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -61,6 +61,54 @@ const ItemDetail = () => {
     views: 45,
     interested: 8
   };
+
+  // Mock suggested items - in real app, this would be fetched based on category
+  const suggestedItems = [
+    {
+      id: 2,
+      title: 'Graphing Calculator TI-83',
+      price: '$35',
+      originalPrice: '$90',
+      image: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=300&h=200&fit=crop',
+      seller: 'Mike R.',
+      condition: 'Good',
+      rating: 4.7,
+      timePosted: '1d ago'
+    },
+    {
+      id: 3,
+      title: 'Scientific Calculator Casio',
+      price: '$25',
+      originalPrice: '$60',
+      image: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=300&h=200&fit=crop',
+      seller: 'Emma L.',
+      condition: 'Like New',
+      rating: 4.8,
+      timePosted: '3h ago'
+    },
+    {
+      id: 4,
+      title: 'Engineering Calculator HP',
+      price: '$60',
+      originalPrice: '$150',
+      image: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=300&h=200&fit=crop',
+      seller: 'David K.',
+      condition: 'Excellent',
+      rating: 5.0,
+      timePosted: '2d ago'
+    },
+    {
+      id: 5,
+      title: 'Basic Calculator Set',
+      price: '$15',
+      originalPrice: '$40',
+      image: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=300&h=200&fit=crop',
+      seller: 'Lisa T.',
+      condition: 'Good',
+      rating: 4.5,
+      timePosted: '5h ago'
+    }
+  ];
 
   const handleContactSeller = () => {
     if (!message.trim() || !buyerContact.trim()) {
@@ -265,6 +313,59 @@ const ItemDetail = () => {
                 </div>
               </CardContent>
             </Card>
+          </div>
+        </div>
+
+        {/* Suggested Items Section */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold mb-6">Similar Items You Might Like</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {suggestedItems.map((suggestedItem) => (
+              <Link key={suggestedItem.id} to={`/item/${suggestedItem.id}`}>
+                <Card className="card-hover cursor-pointer overflow-hidden">
+                  <div className="aspect-square bg-gray-200 relative">
+                    <img 
+                      src={suggestedItem.image} 
+                      alt={suggestedItem.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <Badge className="absolute top-3 left-3 bg-green-600">
+                      {suggestedItem.condition}
+                    </Badge>
+                    <Button 
+                      size="sm" 
+                      variant="ghost" 
+                      className="absolute top-3 right-3 bg-white/80 hover:bg-white"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      <Heart className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold text-lg mb-2 line-clamp-2">{suggestedItem.title}</h3>
+                    
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-xl font-bold text-primary">{suggestedItem.price}</span>
+                      <span className="text-sm text-gray-500 line-through">{suggestedItem.originalPrice}</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                      <div className="flex items-center gap-1">
+                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        <span>{suggestedItem.rating}</span>
+                      </div>
+                      <span>•</span>
+                      <span>{suggestedItem.seller}</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-1 text-sm text-gray-500">
+                      <Clock className="h-4 w-4" />
+                      <span>{suggestedItem.timePosted}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
