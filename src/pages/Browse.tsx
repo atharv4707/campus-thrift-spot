@@ -1,5 +1,5 @@
-
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -186,58 +186,57 @@ const Browse = () => {
         {/* Items Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredItems.map((item) => (
-            <Card key={item.id} className="card-hover cursor-pointer overflow-hidden">
-              <div className="aspect-square bg-gray-200 relative">
-                <img 
-                  src={item.image} 
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                />
-                <Badge className="absolute top-3 left-3 bg-green-600">
-                  {item.condition}
-                </Badge>
-                <Button 
-                  size="sm" 
-                  variant="ghost" 
-                  className="absolute top-3 right-3 bg-white/80 hover:bg-white"
-                >
-                  <Heart className="h-4 w-4" />
-                </Button>
-              </div>
-              <CardContent className="p-4">
-                <h3 className="font-semibold text-lg mb-2 line-clamp-2">{item.title}</h3>
-                <p className="text-sm text-gray-600 mb-3 line-clamp-2">{item.description}</p>
-                
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xl font-bold text-primary">{item.price}</span>
-                  <span className="text-sm text-gray-500 line-through">{item.originalPrice}</span>
+            <Link key={item.id} to={`/item/${item.id}`}>
+              <Card className="card-hover cursor-pointer overflow-hidden">
+                <div className="aspect-square bg-gray-200 relative">
+                  <img 
+                    src={item.image} 
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <Badge className="absolute top-3 left-3 bg-green-600">
+                    {item.condition}
+                  </Badge>
+                  <Button 
+                    size="sm" 
+                    variant="ghost" 
+                    className="absolute top-3 right-3 bg-white/80 hover:bg-white"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <Heart className="h-4 w-4" />
+                  </Button>
                 </div>
-                
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                  <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    <span>{item.rating}</span>
+                <CardContent className="p-4">
+                  <h3 className="font-semibold text-lg mb-2 line-clamp-2">{item.title}</h3>
+                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">{item.description}</p>
+                  
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-xl font-bold text-primary">{item.price}</span>
+                    <span className="text-sm text-gray-500 line-through">{item.originalPrice}</span>
                   </div>
-                  <span>•</span>
-                  <span>{item.seller}</span>
-                </div>
-                
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <div className="flex items-center gap-1">
-                    <MapPin className="h-4 w-4" />
-                    <span className="truncate">{item.location}</span>
+                  
+                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                    <div className="flex items-center gap-1">
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <span>{item.rating}</span>
+                    </div>
+                    <span>•</span>
+                    <span>{item.seller}</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
-                    <span>{item.timePosted}</span>
+                  
+                  <div className="flex items-center justify-between text-sm text-gray-500">
+                    <div className="flex items-center gap-1">
+                      <MapPin className="h-4 w-4" />
+                      <span className="truncate">{item.location}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Clock className="h-4 w-4" />
+                      <span>{item.timePosted}</span>
+                    </div>
                   </div>
-                </div>
-
-                <Button className="w-full mt-4" size="sm">
-                  Contact Seller
-                </Button>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
 
